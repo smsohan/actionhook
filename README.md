@@ -9,7 +9,7 @@ best-practices.
 
 ![Build](https://github.com/smsohan/actionhook/workflows/Ruby/badge.svg)
 
-# Requirements:
+# Features:
 
 - [x] **Core** Send webhooks
 - [x] **Configuration** Timeout

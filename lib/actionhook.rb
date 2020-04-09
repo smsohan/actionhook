@@ -1,4 +1,8 @@
 require "actionhook/version"
+require "actionhook/core/configuration"
+require "actionhook/core/request"
+require "actionhook/core/json_request"
+require "actionhook/core/sender"
 
 module ActionHook
   class Error < StandardError; end

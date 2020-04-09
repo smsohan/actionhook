@@ -13,7 +13,7 @@ module ActionHook
       def deliver(request, configuration = ActionHook.configuration)
         uri = URI(request.url)
 
-        Net::HTTP.start(uri.host, uri.port, (use_ssl: uri.scheme == 'https').merge(configuration.net_http_options)) do |http|
+        Net::HTTP.start(uri.host, uri.port, {use_ssl: uri.scheme == 'https'}.merge(configuration.net_http_options)) do |http|
           method_class = case request.method
           when :post then Net::HTTP::Post
           when :get  then Net::HTTP::Get

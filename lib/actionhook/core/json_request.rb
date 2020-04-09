@@ -1,3 +1,4 @@
+require 'json'
 module ActionHook
   module Core
     class JSONRequest < Request

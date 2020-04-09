@@ -23,22 +23,13 @@ module ActionHook
           http_request = request_method_class(request.method).new request.uri
           http_request.body = request.serialized_body if request.body
 
-          request.headers&.each_pair do |name, value|
+          request.headers_with_sha256_fingerprint&.each_pair do |name, value|
             http_request[name] = value.to_s
           end
-
-          attach_sha256_digest(request, http_request)
 
           http.request http_request
         end
 
-      end
-
-      def self.attach_sha256_digest(request, http_request)
-        if request.secret && http_request.body
-          fingerprint = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, request.secret, http_request.body)
-          http_request[ActionHook.configuration.hash_header_name] = fingerprint
-        end
       end
 
     end

@@ -4,11 +4,14 @@ module ActionHook
     class JSONRequest < Request
 
       def serialized_body
+        return @serialized_body if @serialized_body
+
         if body.is_a?(Hash) || body.is_a?(Array)
-          JSON.generate(body)
+          @serialized_body = JSON.generate(body)
         else
           super
         end
+
       end
 
     end

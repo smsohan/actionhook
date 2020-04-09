@@ -1,6 +1,7 @@
 require 'net/http'
 
 module ActionHook
+
   module Core
 
     class NetHTTPSender
@@ -12,9 +13,9 @@ module ActionHook
           method_class =
             case request.method
             when :post then Net::HTTP::Post
-            when :get  then Net::HTTP::Get
-            when :delete  then Net::HTTP::Delete
-            when :put  then Net::HTTP::Put
+            when :get then Net::HTTP::Get
+            when :delete then Net::HTTP::Delete
+            when :put then Net::HTTP::Put
             else raise ArgumentError, "Invalid method #{request.method} is used"
             end
 
@@ -31,5 +32,7 @@ module ActionHook
       end
 
     end
+
   end
+
 end

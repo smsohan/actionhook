@@ -1,7 +1,7 @@
 module ActionHook
   module Core
     class Request
-      attr_accessor :url, :method, :body
+      attr_accessor :url, :method, :body, :headers
 
       def initialize(url:, method: :post, body: nil, headers: nil)
         @url = url
@@ -12,6 +12,10 @@ module ActionHook
 
       def serialized_body
         @body
+      end
+
+      def uri
+        @uri ||= URI.parse(url)
       end
 
     end

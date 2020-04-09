@@ -1,7 +1,7 @@
 # Why?
 
 A drop-in library for sending webhooks. You specify the content and
-destination, Actionhooks takes care of securely delivering it following industry
+destination, ActionHook takes care of securely delivering it following industry
 best-practices.
 
 

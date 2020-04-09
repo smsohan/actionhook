@@ -5,6 +5,10 @@ destination, ActionHook takes care of securely delivering it following industry
 best-practices.
 
 
+## Build Status
+
+![Build](https://github.com/smsohan/actionhook/workflows/Ruby/badge.svg)
+
 # Requirements:
 
 - [x] **Core** Send webhooks

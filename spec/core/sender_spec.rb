@@ -10,12 +10,12 @@ describe ActionHook::Core::NetHTTPSender do
 
         described_class.send(request)
 
-        expect(WebMock).to have_requested(method, "https://example.com")
+        expect(WebMock).to have_requested(method, 'https://example.com')
       end
     end
 
     it 'sets the serialized body' do
-      stub_request(:post, "https://example.com")
+      stub_request(:post, 'https://example.com')
       request = ActionHook::Core::JSONRequest.new(url: 'https://example.com',
         method: :post,
         body: { hello: 'world' }
@@ -37,7 +37,7 @@ describe ActionHook::Core::NetHTTPSender do
 
       described_class.send(request)
 
-      expect(WebMock).to have_requested(:post, "https://example.com").
+      expect(WebMock).to have_requested(:post, 'https://example.com').
         with(body: '{"hello":"world"}',
           headers: {'CUSTOM-X' => 'X'}
         )

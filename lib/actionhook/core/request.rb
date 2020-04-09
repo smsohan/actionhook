@@ -1,13 +1,14 @@
 module ActionHook
   module Core
     class Request
-      attr_accessor :url, :method, :body, :headers
+      attr_accessor :url, :method, :body, :headers, :secret
 
-      def initialize(url:, method: :post, body: nil, headers: nil)
+      def initialize(url:, method: :post, body: nil, headers: {}, secret: nil)
         @url = url
         @method = method
         @body = body
-        @headers = headers
+        @headers = headers || {}
+        @secret = secret
       end
 
       def serialized_body

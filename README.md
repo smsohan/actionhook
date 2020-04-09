@@ -10,7 +10,7 @@ best-practices.
 - [x] **Core** Send webhooks
 - [x] **Configuration** Timeout
 - [ ] **Security** Blocked IP ranges
-- [ ] **Security** Hashing with secure key
+- [x] **Security** Hashing with secure key
 - [ ] **More** Logging
 - [ ] **More** Instrumentation
 - [ ] **HTTP Adapters** Allow the use of different REST clients
@@ -29,7 +29,21 @@ ActionHook::Core::NetHttpSender.send(request)
 
 ## Configuration
 
+
+All configurations are optional, only use these if you want to override the defaults
 ```ruby
 ActionHook.configuration.open_timeout = 3 # default is 5 seconds
 ActionHook.configuration.read_timeout = 10 # default is 10 seconds
+ActionHook.configuration.hash_header_name = 'CUSTOM-HASH-HEADER' # default is SHA256-FINGERPRINT
 ```
+
+## Hashing With a Secure Key
+```ruby
+request = ActionHook::Core::JSONRequest.new(url: 'https://example.com',
+  secret: '<Your Secret For This Hook>', # Remember to provide your secret
+  method: :post, body: { hello: "world" }, headers: {})
+
+ActionHook::Core::NetHttpSender.send(request)
+# Will automatically append header named CUSTOM-HASH-HEADER with the SHA256 fingerprint of the request body.
+```
+

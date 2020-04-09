@@ -40,7 +40,24 @@ describe ActionHook::Core::NetHTTPSender do
       expect(WebMock).to have_requested(:post, 'https://example.com').
         with(body: '{"hello":"world"}',
           headers: {'CUSTOM-X' => 'X'}
-        )
+      )
+    end
+
+    it 'adds the sha256 digest' do
+      stub_request(:post, "https://example.com")
+      request = ActionHook::Core::JSONRequest.new(url: 'https://example.com',
+        method: :post,
+        body: { hello: 'world' },
+        secret: "GAGA"
+      )
+
+      described_class.send(request)
+
+      expect(WebMock).to have_requested(:post, 'https://example.com').
+        with(body: '{"hello":"world"}',
+          headers: {ActionHook.configuration.hash_header_name =>
+            '3c93293d2d93e47291f818d2b0873321c0e09efc6a7c0c81da19659fc96a1e17'}
+      )
     end
   end
 

@@ -14,6 +14,19 @@ describe ActionHook::Core::Configuration do
         read_timeout: 30
       )
     end
+
+  end
+
+  describe 'has_header_name' do
+    it 'uses the default' do
+      expect(described_class.new.hash_header_name).to eql('SHA256-FINGERPRINT')
+    end
+
+    it 'allows a custom one' do
+      config = described_class.new
+      config.hash_header_name = 'CUSTOM-X'
+      expect(config.hash_header_name).to eql('CUSTOM-X')
+    end
   end
 
 end

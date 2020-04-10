@@ -42,6 +42,13 @@ ActionHook.configuration.read_timeout = 10 # default is 10 seconds
 ActionHook.configuration.hash_header_name = 'CUSTOM-HASH-HEADER' # default is SHA256-FINGERPRINT
 ```
 
+
+Instead of the global config, you can provide a custom configuration at send time as follows:
+
+```ruby
+ActionHook::Core::NetHttpSender.send(request, ActionHook::Core::Configuration.new)
+```
+
 ## Hashing With a Secure Key
 ```ruby
 request = ActionHook::Core::JSONRequest.new(url: 'https://example.com',

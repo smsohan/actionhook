@@ -14,7 +14,7 @@ best-practices.
 - [x] **Core** Send webhooks
 - [x] **Configuration** Timeout
 - [x] **Security** Auth Token
-- [ ] **Security** Blocked IP ranges
+- [x] **Security** Blocked IP ranges
 - [x] **Security** Hashing with secure key
 - [ ] **More** Logging
 - [ ] **More** Instrumentation

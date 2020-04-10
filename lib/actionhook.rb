@@ -1,5 +1,6 @@
 require "actionhook/version"
 require "actionhook/core/configuration"
+require "actionhook/security/authentication"
 require "actionhook/core/request"
 require "actionhook/core/json_request"
 require "actionhook/core/net_http_sender"

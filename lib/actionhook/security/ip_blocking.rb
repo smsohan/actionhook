@@ -4,6 +4,14 @@ module ActionHook
   module Security
     module IPBlocking
 
+      # This is a crucial security feature for sending webhooks. By default, sending webhooks to loopback
+      # interfaces or to the private IP space is blocked. In production, it __should__ remain blocked.
+
+      # If the destination host is an IP address, it's a security risk anyway since you can't have TLS.
+
+      # If the destination host is a domain name, we'll attempt to resolve each of the IP addresses that
+      # resolve the domain name and block the webhook based on the configuration.
+
       class BlockedRequestError < StandardError
       end
 
@@ -37,6 +45,7 @@ module ActionHook
       end
 
       def verify_hostname_allowed!(configuration, hostname)
+        #TODO: Find out of Resolv looks up all kinds of DNS records and if it can be improved by limiting the DNS record types
         Resolv.each_address(hostname) do |ip|
           begin
             #TODO: Add logging

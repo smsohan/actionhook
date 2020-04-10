@@ -52,3 +52,26 @@ ActionHook::Core::NetHttpSender.send(request)
 # Will automatically append header named CUSTOM-HASH-HEADER with the SHA256 fingerprint of the request body.
 ```
 
+## IP Blocking
+
+ActionHook automatically blocks sending webhooks to local and private IP space as described by RFC 1918.
+You can configure custom IP ranges that should also be blocked or disable the block on private IPs.
+
+```ruby
+ActionHook.configuration.allow_private_ips = true # This is dangerous for production. Default is false.
+ActionHook.configuration.blocked_ip_ranges = ['p.q.r.s/24'] # You can configure an array of custom ranges
+```
+
+Or, you can provide a configuration at send time, as follows:
+
+```ruby
+ActionHook::Core::NetHTTPSender.send(request,
+  ActionHook::Core::Configuration.new(allow_private_ips: true, # This is dangerous in production
+    blocked_ip_ranges: ['p.q.r.s/24']
+  )
+)
+```
+
+When a request is blocked due to private IP, the `send` raises `ActionHook::Security::IPBlocking::PrivateIPError`.
+When a request is blocked due to the blocked_ip_ranges, `send` raises `ActionHook::Security::IPBlocking::BlockedRequestError`.
+In both cases, the error message includes necessary context for debugging / logging.

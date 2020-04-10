@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @webhook_endpoint.url %>
+</p>
+
+<p>
+  <strong>Auth type:</strong>
+  <%= @webhook_endpoint.auth_type %>
+</p>
+
+<p>
+  <strong>Auth token:</strong>
+  <%= @webhook_endpoint.auth_token %>
+</p>
+
+<p>
+  <strong>Secret:</strong>
+  <%= @webhook_endpoint.secret %>
+</p>
+
+<%= link_to 'Edit', edit_webhook_endpoint_path(@webhook_endpoint) %> |
+<%= link_to 'Back', webhook_endpoints_path %>

@@ -1,0 +1,2 @@
+module WebhookEndpointsHelper
+end

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Webhook Endpoints</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Auth type</th>
+      <th>Auth token</th>
+      <th>Secret</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @webhook_endpoints.each do |webhook_endpoint| %>
+      <tr>
+        <td><%= webhook_endpoint.url %></td>
+        <td><%= webhook_endpoint.auth_type %></td>
+        <td><%= webhook_endpoint.auth_token %></td>
+        <td><%= webhook_endpoint.secret %></td>
+        <td><%= link_to 'Show', webhook_endpoint %></td>
+        <td><%= link_to 'Edit', edit_webhook_endpoint_path(webhook_endpoint) %></td>
+        <td><%= link_to 'Destroy', webhook_endpoint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Webhook Endpoint', new_webhook_endpoint_path %>

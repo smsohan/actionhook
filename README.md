@@ -18,8 +18,6 @@ best-practices.
 - [x] **Security** Hashing with secure key
 - [ ] **More** Logging
 - [ ] **More** Instrumentation
-- [ ] **HTTP Adapters** Allow the use of different REST clients
-- [ ] **Performance** HTTP keep-alive, gzip / compress
 - [ ] **Scale** Trigger using AWS Lambda, GCP, Azure functions, Docker
 
 

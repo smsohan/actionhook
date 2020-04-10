@@ -29,7 +29,7 @@ module ActionHook
         end
 
         if configuration.blocked_custom_ip_ranges
-          found = configuration.blocked_custom_ip_ranges.find{|range| IPAddr.new(range).include?(ip) }
+          found = configuration.blocked_custom_ip_ranges.find{|range| range.include?(ip) }
           if found
             raise BlockedRequestError.new("Host: #{host} IP: #{ip} is part of the blocked range: #{found}")
           end

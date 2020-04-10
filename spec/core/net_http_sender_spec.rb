@@ -102,7 +102,6 @@ describe ActionHook::Core::NetHTTPSender do
     end
 
     it 'dosent block local IP if allowed' do
-
       stub_request(:post, "http://localhost")
       configuration = ActionHook::Core::Configuration.new(allow_private_ips: true)
       request = ActionHook::Core::JSONRequest.new(url: 'http://localhost',
@@ -114,7 +113,6 @@ describe ActionHook::Core::NetHTTPSender do
     end
 
     it 'dosent block private IP if allowed' do
-
       stub_request(:post, "http://10.0.0.1")
       configuration = ActionHook::Core::Configuration.new(allow_private_ips: true)
       request = ActionHook::Core::JSONRequest.new(url: 'http://10.0.0.1',
@@ -123,6 +121,17 @@ describe ActionHook::Core::NetHTTPSender do
       )
 
       ActionHook::Core::NetHTTPSender.send(request, configuration)
+    end
+
+    it 'blocks when IP belongs to the range' do
+      configuration = ActionHook::Core::Configuration.new(blocked_custom_ip_ranges: %w{ 172.3.30.1/24 })
+      request = ActionHook::Core::JSONRequest.new(url: 'http://172.3.30.4',
+        method: :post,
+        body: { hello: 'world' }
+      )
+
+      expect { ActionHook::Core::NetHTTPSender.send(request, configuration) }.
+        to raise_error ActionHook::Security::IPBlocking::BlockedRequestError
     end
 
 

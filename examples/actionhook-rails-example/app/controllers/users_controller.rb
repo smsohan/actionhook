@@ -44,6 +44,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        UserWebhookJob.perform_now(WebhookEndpoint.first, @user, :updated)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -57,6 +58,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user.destroy
+    UserWebhookJob.perform_now(WebhookEndpoint.first, @user, :deleted)
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }

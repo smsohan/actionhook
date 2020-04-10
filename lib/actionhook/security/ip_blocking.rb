@@ -5,13 +5,6 @@ module ActionHook
     module IPBlocking
 
       class BlockedRequestError < StandardError
-        attr_accessor :hostname_or_ip, :blocked_reason
-
-        def initialize(hostname_or_ip:, resolved_ip:, blocked_reason:)
-          @hostname_or_ip = hostname_or_ip
-          @resolved_ip = resolved_ip
-          @blocked_reason = blocked_reason
-        end
       end
 
       class PrivateIPError < StandardError
@@ -31,7 +24,7 @@ module ActionHook
       protected
 
       def verify_ip_allowed!(configuration, ip, host = ip)
-        if configuration.allow_private_ips && ip.private?
+        if !configuration.allow_private_ips && (ip.private? || ip.loopback?)
           raise PrivateIPError.new("Host: #{host} IP: #{ip} is private")
         end
 
@@ -45,7 +38,12 @@ module ActionHook
 
       def verify_hostname_allowed!(configuration, hostname)
         Resolv.each_address(hostname) do |ip|
-          verify_ip_allowed!(configuration, IPAddr.new(ip), hostname)
+          begin
+            #TODO: Add logging
+            verify_ip_allowed!(configuration, IPAddr.new(ip), hostname)
+          rescue IPAddr::InvalidAddressError
+            #TODO: ADD logging
+          end
         end
       end
 

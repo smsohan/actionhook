@@ -28,7 +28,7 @@ module ActionHook
           http_request = request_method_class(request.method).new request.uri
           http_request.body = request.serialized_body if request.body
 
-          request.headers_with_security&.each_pair do |name, value|
+          request.headers_with_security(configuration)&.each_pair do |name, value|
             http_request[name] = value.to_s
           end
 

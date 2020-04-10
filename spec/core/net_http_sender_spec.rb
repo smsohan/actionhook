@@ -78,7 +78,54 @@ describe ActionHook::Core::NetHTTPSender do
             'Authorization' => 'Token corona'}
       )
     end
+
   end
 
+
+  describe ActionHook::Security::IPBlocking do
+    it 'blocks local addresses' do
+      request = ActionHook::Core::JSONRequest.new(url: 'http://localhost',
+        method: :post,
+        body: { hello: 'world' }
+      )
+
+      expect { ActionHook::Core::NetHTTPSender.send(request) }.to raise_error ActionHook::Security::IPBlocking::PrivateIPError
+    end
+
+    it 'blocks private ip' do
+      request = ActionHook::Core::JSONRequest.new(url: 'http://10.0.0.3',
+        method: :post,
+        body: { hello: 'world' }
+      )
+
+      expect { ActionHook::Core::NetHTTPSender.send(request) }.to raise_error ActionHook::Security::IPBlocking::PrivateIPError
+    end
+
+    it 'dosent block local IP if allowed' do
+
+      stub_request(:post, "http://localhost")
+      configuration = ActionHook::Core::Configuration.new(allow_private_ips: true)
+      request = ActionHook::Core::JSONRequest.new(url: 'http://localhost',
+        method: :post,
+        body: { hello: 'world' }
+      )
+
+      ActionHook::Core::NetHTTPSender.send(request, configuration)
+    end
+
+    it 'dosent block private IP if allowed' do
+
+      stub_request(:post, "http://10.0.0.1")
+      configuration = ActionHook::Core::Configuration.new(allow_private_ips: true)
+      request = ActionHook::Core::JSONRequest.new(url: 'http://10.0.0.1',
+        method: :post,
+        body: { hello: 'world' }
+      )
+
+      ActionHook::Core::NetHTTPSender.send(request, configuration)
+    end
+
+
+  end
 
 end

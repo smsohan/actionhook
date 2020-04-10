@@ -27,7 +27,7 @@ module ActionHook
           headers_with_security.merge!(ActionHook.configuration.hash_header_name => digest)
         end
 
-        headers_with_security.merge!(authentication.to_h) if security
+        headers_with_security.merge!(authentication.to_h) if authentication
 
         headers_with_security
       end

@@ -1,4 +1,5 @@
 require "actionhook/version"
+require "ipaddr"
 require "actionhook/core/configuration"
 require "actionhook/security/authentication"
 require "actionhook/core/request"

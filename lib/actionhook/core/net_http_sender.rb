@@ -1,10 +1,14 @@
 require 'net/http'
+require 'actionhook/security/ip_blocking'
+
 
 module ActionHook
 
   module Core
 
+
     class NetHTTPSender
+      extend ActionHook::Security::IPBlocking
 
       def self.request_method_class(method)
         case method
@@ -17,6 +21,7 @@ module ActionHook
       end
 
       def self.send(request, configuration = ActionHook.configuration)
+        verify_allowed!(configuration, request.uri.host)
         options = { use_ssl: request.uri.scheme == 'https' }.merge(configuration.net_http_options)
 
         Net::HTTP.start(request.uri.host, request.uri.port, options) do |http|

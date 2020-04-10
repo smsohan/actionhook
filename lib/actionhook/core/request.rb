@@ -1,15 +1,15 @@
 module ActionHook
   module Core
     class Request
-      attr_accessor :url, :method, :body, :headers, :secret, :security
+      attr_accessor :url, :method, :body, :headers, :secret, :authentication
 
-      def initialize(url:, method: :post, body: nil, headers: {}, secret: nil, security: nil)
+      def initialize(url:, method: :post, body: nil, headers: {}, secret: nil, authentication: nil)
         @url = url
         @method = method
         @body = body
         @headers = headers || {}
         @secret = secret
-        @security = security
+        @authentication = authentication
       end
 
       def serialized_body
@@ -20,12 +20,16 @@ module ActionHook
         @uri ||= URI.parse(url)
       end
 
-      def headers_with_sha256_fingerprint
+      def headers_with_security
+        headers_with_security = headers.dup
+
         if digest = fingerprint
-          headers.merge(ActionHook.configuration.hash_header_name => digest)
-        else
-          headers
+          headers_with_security.merge!(ActionHook.configuration.hash_header_name => digest)
         end
+
+        headers_with_security.merge!(authentication.to_h) if security
+
+        headers_with_security
       end
 
       def fingerprint

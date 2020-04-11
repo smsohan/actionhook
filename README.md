@@ -19,6 +19,7 @@ best-practices.
 - [ ] **More** Logging
 - [ ] **More** Instrumentation
 - [ ] **Scale** Trigger using AWS Lambda, GCP, Azure functions, Docker
+- [x] **Usability** Example Ruby on Rails app.
 
 
 ## Send Webhooks
@@ -80,3 +81,7 @@ ActionHook::Core::NetHTTPSender.send(request,
 When a request is blocked due to private IP, the `send` raises `ActionHook::Security::IPBlocking::PrivateIPError`.
 When a request is blocked due to the blocked_ip_ranges, `send` raises `ActionHook::Security::IPBlocking::BlockedRequestError`.
 In both cases, the error message includes necessary context for debugging / logging.
+
+## Examples
+
+Please check [examples/actionhook-rails-example](examples/actionhook-rails-example) to see a demo Ruby on Rails app using ActionHook over ActiveJob.

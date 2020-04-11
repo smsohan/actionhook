@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :auth_type %>
-    <%= form.text_field :auth_type %>
+    <%= form.select :auth_type, %w{Token Bearer} %>
   </div>
 
   <div class="field">

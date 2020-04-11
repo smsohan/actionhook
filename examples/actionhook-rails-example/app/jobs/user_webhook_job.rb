@@ -12,7 +12,8 @@ class UserWebhookJob < ApplicationJob
     request = ActionHook::Core::JSONRequest.new(
       url: webhook_endpoint.url,
       body: payload,
-      secret: webhook_endpoint.secret
+      secret: webhook_endpoint.secret,
+      authentication: webhook_endpoint.authentication
     )
 
     ActionHook::Core::NetHTTPSender.send(request)

@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an example of using ActionHook within a Rails app.
 
-Things you may want to cover:
+First, we create a model `WebhookEndpoint` that saves the [information about endpoint](db/schema.rb) such as the URL, authentication, and a secret.
 
-* Ruby version
+Second, we create an `ActiveJob` job called [`UserWebhookJob`](app/jobs/user_webhook_job.rb) that uses ActionHook to actually send the webhooks.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Finally, we call the job from [`UsersController`](app/controllers/users_controller.rb) to show a working example of firing webhooks within Rails.

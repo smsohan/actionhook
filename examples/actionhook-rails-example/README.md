@@ -6,4 +6,4 @@ First, we create a model `WebhookEndpoint` that saves the [information about end
 
 Second, we create an `ActiveJob` job called [`UserWebhookJob`](app/jobs/user_webhook_job.rb) that uses ActionHook to actually send the webhooks.
 
-Finally, we call the job from [`UsersController`](app/controllers/users_controller.rb) to show a working example of firing webhooks within Rails.
+Finally, we call the job from [`UsersController`](app/controllers/users_controller.rb#L31) to show a working example of firing webhooks within Rails.

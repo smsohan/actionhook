@@ -2,7 +2,7 @@
 
 This is an example of using ActionHook within a Rails app.
 
-First, we create a model `WebhookEndpoint` that saves the [information about endpoint](db/schema.rb) such as the URL, authentication, and a secret.
+First, we create a model `WebhookEndpoint` that saves the [information about endpoint](db/schema.rb#L21-L28) such as the URL, authentication, and a secret.
 
 Second, we create an `ActiveJob` job called [`UserWebhookJob`](app/jobs/user_webhook_job.rb) that uses ActionHook to actually send the webhooks.
 

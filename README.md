@@ -16,7 +16,7 @@
 - [x] **Security** 2-factor authentication using a secret for each receiver.
 - [x] **Usability** Works seamlessly on Ruby on Rails. [Example](examples/actionhook-rails-example)
 - [x] **Scale** Works seamlessly on AWS Lambda. [Example](examples/actionhook-aws-lambda-example)
-- [ ] **More** Logging
+- [x] **More** Logging
 
 
 ## Send Webhooks
@@ -79,3 +79,15 @@ ActionHook::Core::NetHttpSender.send(request)
 When a request is blocked due to private IP, `send` raises `ActionHook::Security::IPBlocking::PrivateIPError`.
 When a request is blocked due to the `blocked_ip_ranges`, `send` raises `ActionHook::Security::IPBlocking::BlockedRequestError`.
 In both cases, the error message includes necessary context for debugging / logging.
+
+## Logging
+
+You should pass an instance of `Logger` to put all `ActionLog`. Otherwise, logs are written into `STDOUT`.
+
+```ruby
+# For example, in Rails, you can pass the Rails logger in an initializer
+# config/initializers/actionhook_initializer.rb
+
+ActionHook.logger = Rails.logger
+```
+For debugging, you can set the log level to `debug` for detailed information. Even in debug, the secure header values aren't logged, only the header names are mentioned.

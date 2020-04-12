@@ -1,0 +1,1 @@
+ActionHook.logger = Rails.logger

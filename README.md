@@ -36,7 +36,6 @@ ActionHook::Core::NetHttpSender.send(request)
 All configurations are optional, only use these if you want to override the defaults.
 You can set the following configs in `ActionHook.configuration` object.
 
-|---|---|---|
 |Name|Description|Default Value|
 |---|---|---|
 |`open_timeout` | `Net::HTTP` open timeout in seconds | `5` |
@@ -44,7 +43,6 @@ You can set the following configs in `ActionHook.configuration` object.
 |`hash_header_name` | A HTTP Request header that contains the SHA256 fingerprint of the request body | `SHA256-FINGERPRINT` |
 |`allow_private_ips` | If loopback or private IPs should be allowed as receiver | `false` |
 |`blocked_ip_ranges` | Custom IP ranges to block, e.g. `%w{172.8.9.8/24}`| `[]`|
-|---|---|---|
 
 Instead of the global config using ActionHook.configuration, you can provide an instance of `ActionHook::Core::Configuration` to the `send` method. Please note that, global config will be ignored when you provide a configuration while calling `send`. Here's an example of providing a configuration while calling `send`.
 

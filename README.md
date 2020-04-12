@@ -33,52 +33,55 @@ ActionHook::Core::NetHttpSender.send(request)
 
 ## Configuration
 
+All configurations are optional, only use these if you want to override the defaults.
+You can set the following configs in `ActionHook.configuration` object.
 
-All configurations are optional, only use these if you want to override the defaults
-```ruby
-ActionHook.configuration.open_timeout = 3 # default is 5 seconds
-ActionHook.configuration.read_timeout = 10 # default is 10 seconds
-ActionHook.configuration.hash_header_name = 'CUSTOM-HASH-HEADER' # default is SHA256-FINGERPRINT
-```
+|---|---|---|
+|Name|Description|Default Value|
+|---|---|---|
+|`open_timeout` | `Net::HTTP` open timeout in seconds | `5` |
+|`read_timeout` | `Net::HTTP` read timeout in seconds | `15`|
+|`hash_header_name` | A HTTP Request header that contains the SHA256 fingerprint of the request body | `SHA256-FINGERPRINT` |
+|`allow_private_ips` | If loopback or private IPs should be allowed as receiver | `false` |
+|`blocked_ip_ranges` | Custom IP ranges to block, e.g. `%w{172.8.9.8/24}`| `[]`|
+|---|---|---|
 
-
-Instead of the global config, you can provide a custom configuration at send time as follows:
+Instead of the global config using ActionHook.configuration, you can provide an instance of `ActionHook::Core::Configuration` to the `send` method. Please note that, global config will be ignored when you provide a configuration while calling `send`. Here's an example of providing a configuration while calling `send`.
 
 ```ruby
 ActionHook::Core::NetHttpSender.send(request, ActionHook::Core::Configuration.new)
 ```
 
-## Hashing With a Secure Key
+## Authentication
+
+ActionHook supports `Basic`, `Token`, and `BearerToken` authentication out of the box. You can assign one of these authentication methods to the request object as follows:
+
+```ruby
+  basic = ActionHook::Security::Authentication::Basic.new('a_user', 'a_pass')
+  token = ActionHook::Security::Authentication::Token.new('a_token')
+  bearer_token = ActionHook::Security::Authentication::BearerToken.new('a_bearer_token')
+
+  request = ActionHook::Core::JSONRequest.new(url: 'https://example.com',
+    authentication: basic, # or token, bearer_token
+  )
+```
+
+## Hashing With a Secure Key: 2-Factor Authentication
+
+You can generate secure key for each receiving endpoint and pass it to `ActionHook`
+for adding a 2-factor authentication. Using this this key, `ActionHook` will automatically add the `SHA256-FINGERPRINT` header to the webhook. The receiver can compute the SHA256 digest of the request body using the same secret to verify the sender and message integrity.
+
 ```ruby
 request = ActionHook::Core::JSONRequest.new(url: 'https://example.com',
   secret: '<Your Secret For This Hook>', # Remember to provide your secret
   method: :post, body: { hello: "world" }, headers: {})
 
 ActionHook::Core::NetHttpSender.send(request)
-# Will automatically append header named CUSTOM-HASH-HEADER with the SHA256 fingerprint of the request body.
 ```
 
 ## IP Blocking
 
-ActionHook automatically blocks sending webhooks to local and private IP space as described by RFC 1918.
-You can configure custom IP ranges that should also be blocked or disable the block on private IPs.
-
-```ruby
-ActionHook.configuration.allow_private_ips = true # This is dangerous for production. Default is false.
-ActionHook.configuration.blocked_ip_ranges = ['p.q.r.s/24'] # You can configure an array of custom ranges
-```
-
-Or, you can provide a configuration at send time, as follows:
-
-```ruby
-ActionHook::Core::NetHTTPSender.send(request,
-  ActionHook::Core::Configuration.new(allow_private_ips: true, # This is dangerous in production
-    blocked_ip_ranges: ['p.q.r.s/24']
-  )
-)
-```
-
-When a request is blocked due to private IP, the `send` raises `ActionHook::Security::IPBlocking::PrivateIPError`.
+When a request is blocked due to private IP, `send` raises `ActionHook::Security::IPBlocking::PrivateIPError`.
 When a request is blocked due to the blocked_ip_ranges, `send` raises `ActionHook::Security::IPBlocking::BlockedRequestError`.
 In both cases, the error message includes necessary context for debugging / logging.
 

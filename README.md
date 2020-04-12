@@ -52,7 +52,7 @@ ActionHook::Core::NetHttpSender.send(request, ActionHook::Core::Configuration.ne
 ActionHook supports `Basic`, `Token`, and `BearerToken` authentication out of the box. You can assign one of these authentication methods to the request object as follows:
 
 ```ruby
-  basic = ActionHook::Security::Authentication::Basic.new('a_user', 'a_pass')
+  basic = ActionHook::Security::Authentication::Basic.new(username: 'a_user', password: 'a_pass')
   token = ActionHook::Security::Authentication::Token.new('a_token')
   bearer_token = ActionHook::Security::Authentication::BearerToken.new('a_bearer_token')
 

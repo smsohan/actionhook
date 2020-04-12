@@ -17,7 +17,7 @@ describe ActionHook do
   end
 
   it 'allows a custom logger to be set' do
-    logger = Logger.new("/dev/null")
+    logger = Logger.new('/dev/null')
     ActionHook.logger = logger
     expect(ActionHook.logger).to eql logger
   end

@@ -18,7 +18,7 @@ best-practices.
 - [x] **Security** Hashing with secure key
 - [ ] **More** Logging
 - [ ] **More** Instrumentation
-- [ ] **Scale** Trigger using AWS Lambda, GCP, Azure functions, Docker
+- [x] **Scale** Trigger using AWS Lambda
 - [x] **Usability** Example Ruby on Rails app.
 
 
@@ -85,3 +85,5 @@ In both cases, the error message includes necessary context for debugging / logg
 ## Examples
 
 Please check [examples/actionhook-rails-example](examples/actionhook-rails-example) to see a demo Ruby on Rails app using ActionHook over ActiveJob.
+
+Please check [examples/actionhook-aws-lambda-example](examples/actionhook-aws-lambda-example) to see a demo AWS lambda function using ActionHook.

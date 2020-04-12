@@ -4,4 +4,4 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem "actionhook", github: "smsohan/actionhook", branch: "master"
+gem "actionhook"

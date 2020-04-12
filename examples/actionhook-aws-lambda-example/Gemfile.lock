@@ -1,19 +1,13 @@
-GIT
-  remote: https://github.com/smsohan/actionhook
-  revision: a9b283313471e8316add95b8b5efd81fd58b3a5c
-  branch: master
-  specs:
-    actionhook (0.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
+    actionhook (1.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionhook!
+  actionhook
 
 BUNDLED WITH
    2.1.4

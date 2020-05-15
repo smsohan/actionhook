@@ -31,7 +31,7 @@ phases:
       # - command
   build:
     commands:
-      - docker build -t actionhook:latest && docker run --rm actionhook:latest rspec
+      - docker build . -t actionhook:latest && docker run --rm actionhook:latest rspec
       # - command
   #post_build:
     #commands:

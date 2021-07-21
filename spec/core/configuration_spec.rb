@@ -1,11 +1,16 @@
 describe ActionHook::Core::Configuration do
+  let(:certificate_path) { '/tmp/client.crt' }
 
   describe 'net_http_options' do
-    it 'returns the default values' do
-      expect(described_class.new.net_http_options).to eql(
+    let(:default_options) do
+      {
         open_timeout: described_class::DEFAULT_OPEN_TIMEOUT_IN_SECONDS,
         read_timeout: described_class::DEFAULT_READ_TIMEOUT_IN_SECONDS
-      )
+      }
+    end
+
+    it 'returns the default values' do
+      expect(described_class.new.net_http_options).to eql(default_options)
     end
 
     it 'allows custom timeout values' do
@@ -15,6 +20,12 @@ describe ActionHook::Core::Configuration do
       )
     end
 
+    context 'when ca_file is passed in arguments' do
+      it 'returns default options with ca_file path' do
+        options = described_class.new(ca_file: certificate_path).net_http_options
+        expect(options).to eql(default_options.merge({ ca_file: certificate_path }))
+      end
+    end
   end
 
   describe 'has_header_name' do
@@ -42,6 +53,17 @@ describe ActionHook::Core::Configuration do
       expect(config.allow_private_ips).to be true
     end
 
+  end
+
+  describe 'allow to configure with ca_file' do
+    it 'sets to nil by default' do
+      expect(described_class.new.ca_file).to be_nil
+    end
+
+    it 'allows to configure request with ca_file' do
+      config = described_class.new(ca_file: certificate_path)
+      expect(config.ca_file). to be certificate_path
+    end
   end
 
   describe 'blocked_custom_ip_ranges' do

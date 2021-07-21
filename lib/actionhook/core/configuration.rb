@@ -7,7 +7,7 @@ module ActionHook
       DEFAULT_READ_TIMEOUT_IN_SECONDS = 15
       DEFAULT_HASH_HEADER_NAME = 'SHA256-FINGERPRINT'
       attr_accessor :open_timeout, :read_timeout, :hash_header_name,
-        :allow_private_ips
+        :allow_private_ips, :ca_file
 
       attr_writer :blocked_custom_ip_ranges
 
@@ -15,20 +15,23 @@ module ActionHook
         read_timeout: DEFAULT_READ_TIMEOUT_IN_SECONDS,
         hash_header_name: DEFAULT_HASH_HEADER_NAME,
         allow_private_ips: false,
-        blocked_custom_ip_ranges: []
+        blocked_custom_ip_ranges: [],
+        ca_file: nil
       )
         @open_timeout = open_timeout
         @read_timeout = read_timeout
         @hash_header_name = hash_header_name
         @allow_private_ips = allow_private_ips
         @blocked_custom_ip_ranges = blocked_custom_ip_ranges || []
+        @ca_file = ca_file
       end
 
       def net_http_options
         {
           open_timeout: @open_timeout,
-          read_timeout: @read_timeout
-        }
+          read_timeout: @read_timeout,
+          ca_file: @ca_file
+        }.compact
       end
 
       def blocked_custom_ip_ranges

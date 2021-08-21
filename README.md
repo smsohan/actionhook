@@ -2,6 +2,8 @@
 
 `ActionHook` is a drop-in ruby gem for sending webhooks. You specify the content and destination, `ActionHook` takes care of securely delivering it.
 
+Sending a webhook from an application starts out as a simple coding task. To put webhooks into production is actually quite complex because you need to worry about timeouts, retry, TLS issues, authentication, and secure delivery. Scaling webhooks can be a challenge if you have to send thousands of such hooks every second. This library is designed with these features in mind and should work for most use cases.
+
 ## Build Status
 
 ![Build](https://github.com/smsohan/actionhook/workflows/Ruby/badge.svg)
@@ -92,3 +94,17 @@ ActionHook.logger = Rails.logger
 ```
 
 Set the log level to `debug` for detailed information. Even in debug, the secure header values aren't logged for accidental credential leakage, only the header names are mentioned.
+
+## Develop and Contribute
+
+```bash
+# Install dependencies
+$ bundle
+
+# Run tests
+$ bundle exec rspec
+```
+
+Make your changes on a fork and send a pull-request when you're ready. Include details about the intent and how you tested your changes.
+
+Works great on GitHub Codespaces, too.

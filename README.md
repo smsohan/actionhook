@@ -7,7 +7,7 @@ Sending a webhook from an application starts out as a simple coding task. To put
 ## Build Status
 [![Ruby](https://github.com/smsohan/actionhook/actions/workflows/ruby.yml/badge.svg)](https://github.com/smsohan/actionhook/actions/workflows/ruby.yml)
 
-# Features:
+# Features
 
 - [x] **Core** Send webhooks
 - [x] **Configuration** Timeout, IP blocking, etc.

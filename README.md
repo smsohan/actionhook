@@ -5,8 +5,7 @@
 Sending a webhook from an application starts out as a simple coding task. To put webhooks into production is actually quite complex because you need to worry about timeouts, retry, TLS issues, authentication, and secure delivery. Scaling webhooks can be a challenge if you have to send thousands of such hooks every second. This library is designed with these features in mind and should work for most use cases.
 
 ## Build Status
-
-![Build](https://github.com/smsohan/actionhook/workflows/Ruby/badge.svg)
+[![Ruby](https://github.com/smsohan/actionhook/actions/workflows/ruby.yml/badge.svg)](https://github.com/smsohan/actionhook/actions/workflows/ruby.yml)
 
 # Features:
 
